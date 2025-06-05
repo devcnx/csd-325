@@ -1,4 +1,4 @@
-# Module 1.2 GitHub Repository Setup
+# Module 2.2 Documented Debugging and Flowchart(s)
 
 _**Institution**: Bellevue University_  
 _**Program**: BS in Software Development_  
@@ -7,19 +7,32 @@ _**Course**: CSD325 Advanced Python_
 _**Author**: Brittaney Perry-Morgan_  
 _**Date**: Sunday, June 1st, 2025_
 
-This repository contains the source code for an assignment in the CSD325 course. The assignment is designed to demonstrate proficiency in advanced Python programming.
+This repository contains the source code, flowchart, and debugging documentation for the Module 2.2 assignment. This
+is meant to demonstrate proficiency in program flow and practical debugging techniques in Python.
 
 ## Assignment Overview
 
 #### Steps
 
-- [ Each step listed from the assignment instructions. ]
+- Select a Python program with at least one function (from previous coursework or research).
+- Create a flowchart modeling the program's logic using a drawing application.
+- Copy and paste the flowchart into a Word document and save it in this module.
+- Review the Debugging Guide and/or the Python debugging tutorial by Abiola (codementor.io, 2017).
+- Use the IDF to debug the program:
+  - Set a breaking point and start debugging.
+  - Take screenshots showing:
+    - The breakpoint hit.
+    - Stepping into the function.
+    - Additional debugging actions or error handling.
+- Paste screenshots into a Word document with captions explaining each step and save.
+- Commit and push all files to GitHub.
 
 ### Assignment Deliverables
 
-#### Steps
-
-- [ Each step listed from the assignment instructions. ]
+- Flowchart
+- Debugging Documentation
+- Program Source Code
+- The Below Results Document (Word or PDF)
 
 #### Results Document (Word or PDF)
 
