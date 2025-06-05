@@ -1,4 +1,9 @@
-# Module 1.2 GitHub Repository Setup
+Name: Brittaney Perry-Morgan
+Date: Sunday, June 1st, 2025
+Assignment: Module 1.3 On the Wall + Flowchart
+Purpose:
+
+# Module
 
 _**Institution**: Bellevue University_  
 _**Program**: BS in Software Development_  
