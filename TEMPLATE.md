@@ -17,9 +17,7 @@ This repository contains the source code for an assignment in the CSD325 course.
 
 ### Assignment Deliverables
 
-#### Steps
-
-- [ Each step listed from the assignment instructions. ]
+- [ Each step required deliverable, as listed below or otherwise mentioned, from the assignment instructions. ]
 
 #### Results Document (Word or PDF)
 
