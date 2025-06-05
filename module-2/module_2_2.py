@@ -42,7 +42,7 @@ def get_valid_bottles_input(prompt: str) -> int:
     return starting_bottles
 
 
-def __get_verse_lyrics(current_bottles: int) -> str:
+def get_verse_lyrics(current_bottles: int) -> str:
     """
     Returns the lyrics for a single verse of the song.
 
@@ -75,15 +75,26 @@ def sing_bottles_song(starting_bottles: int) -> None:
     Parameters:
         - starting_bottles: The number of bottles to start with.
         :type starting_bottles: int
+
+    Returns:
+        None
+
     """
     while starting_bottles > 0:
-        print(__get_verse_lyrics(starting_bottles))
+        print(get_verse_lyrics(starting_bottles))
         starting_bottles -= 1
     print("No more bottles of beer on the wall, no more bottles of beer.")
     return None
 
 
 def main():
+    """
+    Main function.
+
+    This function is responsible for getting the starting number of bottles and printing the
+    song lyrics. It calls the get_valid_bottles_input function to get a valid input from the user.
+    It then calls the sing_bottles_song function to print the song lyrics if the input is valid.
+    """
     while True:
         try:
             user_input = input("How many bottles of beer are on the wall? ")
