@@ -213,3 +213,7 @@ cython_debug/
 
 # DeepSource
 .deepsource.toml
+
+# Bext
+typings/
+.bextcode
