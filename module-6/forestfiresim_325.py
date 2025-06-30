@@ -224,6 +224,9 @@ class Forest:
             - CellState: The new state of the cell (TREE, FIRE, or EMPTY).
             :rtype: CellState
         """
+        if current == LAKE:
+            return LAKE
+
         if current == EMPTY:
             return TREE if random.random() <= GROW_CHANCE else EMPTY
 
