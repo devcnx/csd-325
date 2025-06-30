@@ -72,8 +72,16 @@ class Forest:
         A new Forest instance is returned with each cell set to TREE or EMPTY based on
         the initial tree density probability.
 
+        Parameters:
+            - width: The width of the forest.
+            :type width: int
+
+            - height: The height of the forest.
+            :type height: int
+
         Returns:
-            Forest: A new Forest object with randomly initialized cell states.
+            - A new Forest object with randomly initialized cell states.
+            :rtype: Forest
         """
         forest = cls(width, height)
         forest.cells = {
@@ -82,10 +90,13 @@ class Forest:
             for y in range(height)
         }
 
-        lake_width = width // 2
-        lake_height = height // 2
-        for x in range(lake_width - 1, lake_width + 2):
-            for y in range(lake_height - 1, lake_height + 2):
+        lake_width = width // 4
+        lake_height = height // 4
+        lake_start_x = (width - lake_width) // 2
+        lake_start_y: int = (height - lake_height) // 2
+
+        for x in range(lake_start_x, lake_start_x + lake_width):
+            for y in range(lake_start_y, lake_start_y + lake_height):
                 forest.cells[(x, y)] = LAKE
 
         return forest
