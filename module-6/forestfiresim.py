@@ -58,18 +58,12 @@ class Forest:
     @classmethod
     def create_new(cls, width: int, height: int) -> 'Forest':
         """
-        Create a new forest with the given dimensions.
-
-        Parameters:
-            width: The width of the forest.
-            :type width: int
-
-            height: The height of the forest.
-            :type height: int
-
+        Create and initialize a new forest grid with random tree placement.
+        
+        A new Forest instance is returned with each cell set to TREE or EMPTY based on the initial tree density probability.
+        
         Returns:
-            A new Forest object with the given dimensions.
-            :rtype: Forest
+            Forest: A new Forest object with randomly initialized cell states.
         """
         forest = cls(width, height)
         forest.cells = {
@@ -80,7 +74,11 @@ class Forest:
         return forest
 
     def display(self) -> None:
-        """Display the forest on the screen using ANSI color codes."""
+        """
+        Renders the current state of the forest grid to the terminal using ANSI color codes.
+        
+        Displays trees in green, fires in red, and empty spaces in the default color. Also prints simulation parameters and user instructions below the grid.
+        """
         output: list[str] = []
         for y in range(self.height):
             line_parts: list[str] = []
@@ -103,18 +101,14 @@ class Forest:
 
     def _has_burning_neighbor(self, x: int, y: int) -> bool:
         """
-        Check if any neighbor cell is on fire.
-
+        Returns True if at least one of the eight neighboring cells around (x, y) is on fire; otherwise returns False.
+        
         Parameters:
-            x: X coordinate of the cell
-            :type x: int
-
-            y: Y coordinate of the cell
-            :type y: int
-
+            x (int): X coordinate of the cell.
+            y (int): Y coordinate of the cell.
+        
         Returns:
-            True if any neighbor cell is on fire, False otherwise.
-            :rtype: bool
+            bool: True if any neighbor is burning, False otherwise.
         """
         for dx, dy in self._get_neighbors():
             nx, ny = x + dx, y + dy
@@ -126,18 +120,13 @@ class Forest:
     def _spread_fire_to_neighbors(self, center_x: int, center_y: int,
                                   cells_to_update: dict[Position, CellState]) -> None:
         """
-        Spread fire to neighboring trees.
-
-        Parameters:
-            center_x: X coordinate of the center cell
-            :type center_x: int
-
-            center_y: Y coordinate of the center cell
-            :type center_y: int
-
-            cells_to_update: Dictionary of cells to update
-            :type cells_to_update: dict[Position, CellState]
-        """
+                                  Marks all neighboring tree cells of the specified cell to be set on fire in the next simulation step.
+                                  
+                                  Parameters:
+                                      center_x (int): X coordinate of the cell currently on fire.
+                                      center_y (int): Y coordinate of the cell currently on fire.
+                                      cells_to_update (dict[Position, CellState]): Dictionary tracking cells that will change state in the next update.
+                                  """
         for delta_x, delta_y in self._get_neighbors():
             neighbor_x, neighbor_y = center_x + delta_x, center_y + delta_y
             if (0 <= neighbor_x < self.width and 0 <= neighbor_y < self.height and
@@ -145,7 +134,9 @@ class Forest:
                 cells_to_update[(neighbor_x, neighbor_y)] = FIRE
 
     def step(self) -> None:
-        """Advance the simulation by one step."""
+        """
+        Advances the forest simulation by one time step, updating all cell states based on growth, fire spread, and burning rules.
+        """
         new_cells: dict[Position, CellState] = {}
 
         for x in range(self.width):
@@ -166,22 +157,18 @@ class Forest:
     def _determine_new_cell_state(self, x: int, y: int,
                                   current: CellState) -> CellState:
         """
-        Determine the new state of a cell based on its current state and neighbors.
-
-        Parameters:
-            x: X coordinate of the cell
-            :type x: int
-
-            y: Y coordinate of the cell
-            :type y: int
-
-            current: Current state of the cell (must be TREE, FIRE, or EMPTY)
-            :type current: CellState
-
-        Returns:
-            The new state of the cell (TREE, FIRE, or EMPTY)
-            :rtype: CellState
-        """
+                                  Determines the next state of a cell based on its current state and the states of neighboring cells.
+                                  
+                                  A cell may grow a tree, catch fire due to lightning or nearby fire, or become empty after burning.
+                                  
+                                  Parameters:
+                                      x (int): X coordinate of the cell.
+                                      y (int): Y coordinate of the cell.
+                                      current (CellState): The current state of the cell.
+                                  
+                                  Returns:
+                                      CellState: The new state of the cell (TREE, FIRE, or EMPTY).
+                                  """
         if current == EMPTY:
             return TREE if random.random() <= GROW_CHANCE else EMPTY
 
@@ -195,11 +182,10 @@ class Forest:
     @staticmethod
     def _get_neighbors() -> list[tuple[int, int]]:
         """
-        Return relative coordinates of all 8 neighboring cells.
-
+        Return the relative coordinate offsets for all eight neighboring cells in a 2D grid.
+        
         Returns:
-            List of relative coordinates of all 8 neighboring cells.
-            :rtype: list[tuple[int, int]]
+            A list of (dx, dy) tuples representing the positions of all adjacent neighbors surrounding a cell.
         """
         return [
             (-1, -1), (-1, 0), (-1, 1),
@@ -209,7 +195,11 @@ class Forest:
 
 
 def main() -> None:
-    """Run the forest fire simulation."""
+    """
+    Starts and runs the interactive forest fire simulation loop.
+    
+    Initializes the forest, clears the terminal, and repeatedly displays the simulation state, advances the simulation by one step, and pauses between updates. Handles Ctrl-C to exit gracefully with credits.
+    """
     forest = Forest.create_new(WIDTH, HEIGHT)
     bext.clear()  # type: ignore[no-untyped-call]
 
