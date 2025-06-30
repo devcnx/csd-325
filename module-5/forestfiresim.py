@@ -1,16 +1,14 @@
 """
 Name: Brittaney Perry-Morgan
-Date: Sunday, June 22nd, 2025
-Assignment: Module 5.2 Forest Fire Simulation: Program and Revised Flowchart
+Date: Sunday, June 29th, 2025
+Assignment: Module 6.2 Forest Fire Simulation Project: Revised Flowchart
 Purpose: To demonstrate proficiency in advanced Python programming.
 
 A simulation of a forest fire spreading through a randomly generated forest.
 Trees grow randomly and can be struck by lightning, which causes fires to spread.
 """
-
 import random
 import sys
-import os
 import time
 from dataclasses import dataclass, field
 from typing import Final, Literal, TypeAlias
@@ -102,7 +100,6 @@ class Forest:
                     line_parts.append(EMPTY)
             output.append(''.join(line_parts))
 
-        # Add status messages at the bottom
         status_line = (f'Grow chance: {GROW_CHANCE * 100:.0f}%  '
                        f'Lightning chance: {FIRE_CHANCE * 100:.0f}%  '
                        'Press Ctrl-C to quit.')
@@ -162,7 +159,8 @@ class Forest:
                 pos = (x, y)
                 current = self.cells.get(pos, EMPTY)
                 # Ensure current is a valid CellState
-                current_state: CellState = current if current in (TREE, FIRE, EMPTY) else EMPTY
+                current_state: CellState = current if current in (TREE, FIRE, EMPTY) \
+                    else EMPTY
                 new_state = self._determine_new_cell_state(x, y, current_state)
                 new_cells[pos] = new_state
                 if new_state == FIRE:
@@ -171,17 +169,24 @@ class Forest:
         # Update cells with new states
         self.cells.update(new_cells)  # type: ignore[arg-type]
 
-    def _determine_new_cell_state(self, x: int, y: int, current: CellState) -> CellState:
+    def _determine_new_cell_state(self, x: int, y: int,
+                                  current: CellState) -> CellState:
         """
         Determine the new state of a cell based on its current state and neighbors.
 
         Parameters:
             x: X coordinate of the cell
+            :type x: int
+
             y: Y coordinate of the cell
+            :type y: int
+
             current: Current state of the cell (must be TREE, FIRE, or EMPTY)
+            :type current: CellState
 
         Returns:
             The new state of the cell (TREE, FIRE, or EMPTY)
+            :rtype: CellState
         """
         if current == EMPTY:
             return TREE if random.random() <= GROW_CHANCE else EMPTY
