@@ -1,10 +1,19 @@
-"""Forest Fire Sim, modified by Sue Sampson, based on a program by Al Sweigart
-A simulation of wildfires spreading in a forest. Press Ctrl-C to stop.
-Inspired by Nicky Case's Emoji Sim http://ncase.me/simulating/model/
-** use spaces, not indentation to modify **
-Tags: short, bext, simulation"""
+"""
+Name: Brittaney Perry-Morgan
+Date: Sunday, June 22nd, 2025
+Assignment: Module 5.2 Forest Fire Simulation: Program and Revised Flowchart
+Purpose: To demonstrate proficiency in advanced Python programming.
 
-import random, sys, time
+A simulation of a forest fire spreading through a randomly generated forest.
+Trees grow randomly and can be struck by lightning, which causes fires to spread.
+"""
+
+import random
+import sys
+import os
+import time
+from dataclasses import dataclass, field
+from typing import Final, Literal, TypeAlias
 
 try:
     import bext
@@ -12,100 +21,209 @@ except ImportError:
     print('This program requires the bext module, which you')
     print('can install by following the instructions at')
     print('https://pypi.org/project/Bext/')
-    sys.exit()
+    sys.exit(1)
 
-# Set up the constants:
-WIDTH = 79
-HEIGHT = 22
+# Type Aliases
+CellState: TypeAlias = Literal['A', '@', ' ']
+Position: TypeAlias = tuple[int, int]
 
-TREE = 'A'
-FIRE = '@'
-EMPTY = ' '
+# Constants
+WIDTH: Final[int] = 79
+HEIGHT: Final[int] = 22
 
-# (!) Try changing these settings to anything between 0.0 and 1.0:
-INITIAL_TREE_DENSITY = 0.20  # Amount of forest that starts with trees.
-GROW_CHANCE = 0.01  # Chance a blank space turns into a tree.
-FIRE_CHANCE = 0.01  # Chance a tree is hit by lightning & burns.
+# Cell States
+TREE: Final[CellState] = 'A'
+FIRE: Final[CellState] = '@'
+EMPTY: Final[CellState] = ' '
 
-# (!) Try setting the pause length to 1.0 or 0.0:
-PAUSE_LENGTH = 0.5
+# Simulation Parameters
+INITIAL_TREE_DENSITY: Final[float] = 0.20  # Amount of forest that starts with trees
+GROW_CHANCE: Final[float] = 0.01  # Chance a blank space turns into a tree
+FIRE_CHANCE: Final[float] = 0.01  # Chance a tree is hit by lightning & burns
+PAUSE_LENGTH: Final[float] = 0.5  # Time between simulation steps in seconds
 
 
-def main():
-    forest = createNewForest()
-    bext.clear()
+@dataclass
+class Forest:
+    """
+    A forest simulation grid.
 
-    while True:  # Main program loop.
-        displayForest(forest)
+    Fields:
+        - width: The width of the forest.
+        :type width: int
 
-        # Run a single simulation step:
-        nextForest = {'width': forest['width'],
-                      'height': forest['height']}
+        - height: The height of the forest.
+        :type height: int
 
-        for x in range(forest['width']):
-            for y in range(forest['height']):
-                if (x, y) in nextForest:
-                    # If we've already set nextForest[(x, y)] on a
-                    # previous iteration, just do nothing here:
-                    continue
+        - cells: A dictionary of cell positions and their states.
+        :type cells: dict[tuple[int, int], CellState]
+    """
 
-                if ((forest[(x, y)] == EMPTY)
-                    and (random.random() <= GROW_CHANCE)):
-                    # Grow a tree in this empty space.
-                    nextForest[(x, y)] = TREE
-                elif ((forest[(x, y)] == TREE)
-                    and (random.random() <= FIRE_CHANCE)):
-                    # Lightning sets this tree on fire.
-                    nextForest[(x, y)] = FIRE
-                elif forest[(x, y)] == FIRE:
-                    # This tree is currently burning.
-                    # Loop through all the neighboring spaces:
-                    for ix in range(-1, 2):
-                        for iy in range(-1, 2):
-                            # Fire spreads to neighboring trees:
-                            if forest.get((x + ix, y + iy)) == TREE:
-                                nextForest[(x + ix, y + iy)] = FIRE
-                    # The tree has burned down now, so erase it:
-                    nextForest[(x, y)] = EMPTY
+    width: int
+    height: int
+    cells: dict[tuple[int, int], CellState] = field(default_factory=dict)
+
+    @classmethod
+    def create_new(cls, width: int, height: int) -> 'Forest':
+        """
+        Create a new forest with the given dimensions.
+
+        Parameters:
+            width: The width of the forest.
+            :type width: int
+
+            height: The height of the forest.
+            :type height: int
+
+        Returns:
+            A new Forest object with the given dimensions.
+            :rtype: Forest
+        """
+        forest = cls(width, height)
+        forest.cells = {
+            (x, y): TREE if random.random() <= INITIAL_TREE_DENSITY else EMPTY
+            for x in range(width)
+            for y in range(height)
+        }
+        return forest
+
+    def display(self) -> None:
+        """Display the forest on the screen using ANSI color codes."""
+        output: list[str] = []
+        for y in range(self.height):
+            line_parts: list[str] = []
+            for x in range(self.width):
+                cell = self.cells.get((x, y), EMPTY)
+                if cell == TREE:
+                    line_parts.append('\x1b[32m' + TREE + '\x1b[0m')  # Green
+                elif cell == FIRE:
+                    line_parts.append('\x1b[31m' + FIRE + '\x1b[0m')   # Red
                 else:
-                    # Just copy the existing object:
-                    nextForest[(x, y)] = forest[(x, y)]
-        forest = nextForest
+                    line_parts.append(EMPTY)
+            output.append(''.join(line_parts))
 
-        time.sleep(PAUSE_LENGTH)
+        # Add status messages at the bottom
+        status_line = (f'Grow chance: {GROW_CHANCE * 100:.0f}%  '
+                       f'Lightning chance: {FIRE_CHANCE * 100:.0f}%  '
+                       'Press Ctrl-C to quit.')
+        output.append(status_line)
+
+        print('\n'.join(output), end='\r')
+
+    def _has_burning_neighbor(self, x: int, y: int) -> bool:
+        """
+        Check if any neighbor cell is on fire.
+
+        Parameters:
+            x: X coordinate of the cell
+            :type x: int
+
+            y: Y coordinate of the cell
+            :type y: int
+
+        Returns:
+            True if any neighbor cell is on fire, False otherwise.
+            :rtype: bool
+        """
+        for dx, dy in self._get_neighbors():
+            nx, ny = x + dx, y + dy
+            if (0 <= nx < self.width and 0 <= ny < self.height
+                    and self.cells.get((nx, ny), EMPTY) == FIRE):
+                return True
+        return False
+
+    def _spread_fire_to_neighbors(self, center_x: int, center_y: int,
+                                  cells_to_update: dict[Position, CellState]) -> None:
+        """
+        Spread fire to neighboring trees.
+
+        Parameters:
+            center_x: X coordinate of the center cell
+            :type center_x: int
+
+            center_y: Y coordinate of the center cell
+            :type center_y: int
+
+            cells_to_update: Dictionary of cells to update
+            :type cells_to_update: dict[Position, CellState]
+        """
+        for delta_x, delta_y in self._get_neighbors():
+            neighbor_x, neighbor_y = center_x + delta_x, center_y + delta_y
+            if (0 <= neighbor_x < self.width and 0 <= neighbor_y < self.height and
+                    self.cells.get((neighbor_x, neighbor_y), EMPTY) == TREE):
+                cells_to_update[(neighbor_x, neighbor_y)] = FIRE
+
+    def step(self) -> None:
+        """Advance the simulation by one step."""
+        new_cells: dict[Position, CellState] = {}
+
+        for x in range(self.width):
+            for y in range(self.height):
+                pos = (x, y)
+                current = self.cells.get(pos, EMPTY)
+                # Ensure current is a valid CellState
+                current_state: CellState = current if current in (TREE, FIRE, EMPTY) else EMPTY
+                new_state = self._determine_new_cell_state(x, y, current_state)
+                new_cells[pos] = new_state
+                if new_state == FIRE:
+                    self._spread_fire_to_neighbors(x, y, new_cells)
+
+        # Update cells with new states
+        self.cells.update(new_cells)  # type: ignore[arg-type]
+
+    def _determine_new_cell_state(self, x: int, y: int, current: CellState) -> CellState:
+        """
+        Determine the new state of a cell based on its current state and neighbors.
+
+        Parameters:
+            x: X coordinate of the cell
+            y: Y coordinate of the cell
+            current: Current state of the cell (must be TREE, FIRE, or EMPTY)
+
+        Returns:
+            The new state of the cell (TREE, FIRE, or EMPTY)
+        """
+        if current == EMPTY:
+            return TREE if random.random() <= GROW_CHANCE else EMPTY
+
+        if current == TREE:
+            if random.random() <= FIRE_CHANCE or self._has_burning_neighbor(x, y):
+                return FIRE
+            return TREE
+
+        return EMPTY if current == FIRE else current
+
+    @staticmethod
+    def _get_neighbors() -> list[tuple[int, int]]:
+        """
+        Return relative coordinates of all 8 neighboring cells.
+
+        Returns:
+            List of relative coordinates of all 8 neighboring cells.
+            :rtype: list[tuple[int, int]]
+        """
+        return [
+            (-1, -1), (-1, 0), (-1, 1),
+            (0, -1),           (0, 1),
+            (1, -1),  (1, 0),  (1, 1)
+        ]
 
 
-def createNewForest():
-    """Returns a dictionary for a new forest data structure."""
-    forest = {'width': WIDTH, 'height': HEIGHT}
-    for x in range(WIDTH):
-        for y in range(HEIGHT):
-            if (random.random() * 100) <= INITIAL_TREE_DENSITY:
-                forest[(x, y)] = TREE  # Start as a tree.
-            else:
-                forest[(x, y)] = EMPTY  # Start as an empty space.
-    return forest
+def main() -> None:
+    """Run the forest fire simulation."""
+    forest = Forest.create_new(WIDTH, HEIGHT)
+    bext.clear()  # type: ignore
 
-
-def displayForest(forest):
-    """Display the forest data structure on the screen."""
-    bext.goto(0, 0)
-    for y in range(forest['height']):
-        for x in range(forest['width']):
-            if forest[(x, y)] == TREE:
-                bext.fg('green')
-                print(TREE, end='')
-            elif forest[(x, y)] == FIRE:
-                bext.fg('red')
-                print(FIRE, end='')
-
-            elif forest[(x, y)] == EMPTY:
-                print(EMPTY, end='')
-        print()
-    bext.fg('reset')  # Use the default font color.
-    print(f'Grow chance: {GROW_CHANCE * 100}%  ', end='')
-    print(f'Lightning chance: {FIRE_CHANCE * 100}%  ', end='')
-    print('Press Ctrl-C to quit.')
+    try:
+        while True:  # Main program loop
+            forest.display()
+            forest.step()
+            time.sleep(PAUSE_LENGTH)
+    except KeyboardInterrupt:
+        print('\nForest Fire Simulation, by Al Sweigart')  # noqa: SC100
+        print('Modified by Sue Sampson')
+        print('Refactored by Brittaney Perry-Morgan')
+        sys.exit()  # When Ctrl-C is pressed, end the program.
 
 
 # If this program was run (instead of imported), run the game:
