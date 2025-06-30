@@ -2,7 +2,7 @@
 from typing import Final, Literal, TypeAlias
 
 
-CellState: TypeAlias = Literal['A', '@', ' ']
+CellState: TypeAlias = Literal['A', '@', ' ', '~']
 Position: TypeAlias = tuple[int, int]
 
 # Constants
@@ -13,6 +13,7 @@ HEIGHT: Final[int] = 22
 TREE: Final[CellState] = 'A'
 FIRE: Final[CellState] = '@'
 EMPTY: Final[CellState] = ' '
+WATER: Final[CellState] = '~'
 
 # Simulation Parameters
 INITIAL_TREE_DENSITY: Final[float] = 0.20  # Amount of forest that starts with trees
