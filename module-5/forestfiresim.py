@@ -42,9 +42,11 @@ GROW_CHANCE: Final[float] = 0.01  # Chance a blank space turns into a tree
 FIRE_CHANCE: Final[float] = 0.01  # Chance a tree is hit by lightning & burns
 PAUSE_LENGTH: Final[float] = 0.5  # Time between simulation steps in seconds
 
+
 @dataclass
 class Forest:
     """A forest simulation grid."""
+
     width: int
     height: int
     cells: Dict[Tuple[int, int], str] = field(default_factory=dict)
@@ -93,9 +95,9 @@ class Forest:
                     # Check adjacent cells for fire
                     for dx, dy in self._get_neighbors():
                         nx, ny = x + dx, y + dy
-                        if (0 <= nx < self.width and
-                            0 <= ny < self.height and
-                            self.cells.get((nx, ny), '') == FIRE):
+                        if (0 <= nx < self.width
+                                and 0 <= ny < self.height
+                                and self.cells.get((nx, ny), '') == FIRE):
                             new_cells[pos] = FIRE
                             break
                     else:
@@ -123,6 +125,7 @@ class Forest:
             (0, -1),           (0, 1),
             (1, -1),  (1, 0),  (1, 1)
         ]
+
 
 def main() -> None:
     """Run the forest fire simulation."""
