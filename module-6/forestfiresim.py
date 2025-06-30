@@ -98,13 +98,13 @@ def displayForest(forest):
             elif forest[(x, y)] == FIRE:
                 bext.fg('red')
                 print(FIRE, end='')
-          	
+
             elif forest[(x, y)] == EMPTY:
                 print(EMPTY, end='')
         print()
     bext.fg('reset')  # Use the default font color.
-    print('Grow chance: {}%  '.format(GROW_CHANCE * 100), end='')
-    print('Lightning chance: {}%  '.format(FIRE_CHANCE * 100), end='')
+    print(f'Grow chance: {GROW_CHANCE * 100}%  ', end='')
+    print(f'Lightning chance: {FIRE_CHANCE * 100}%  ', end='')
     print('Press Ctrl-C to quit.')
 
 
