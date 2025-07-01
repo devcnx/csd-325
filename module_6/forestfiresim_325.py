@@ -19,7 +19,7 @@ import random
 import sys
 import time
 from dataclasses import dataclass, field
-from constants import (
+from .constants import (
         CellState,
         EMPTY,
         FIRE,
