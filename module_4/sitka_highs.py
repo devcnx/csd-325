@@ -17,11 +17,13 @@ from it. The flow of the program will be as follows:
 
 import csv
 from datetime import datetime
+from pathlib import Path
 
 from matplotlib import pyplot as plt
 
-filename = "module_4/sitka_weather_2018_simple.csv"
-with open(filename) as f:
+# Get the absolute path to the CSV file using pathlib
+file_path = Path(__file__).parent / "sitka_weather_2018_simple.csv"
+with open(file_path) as f:
     reader = csv.reader(f)
     header_row = next(reader)
 
