@@ -11,7 +11,7 @@ import random
 import sys
 import time
 
-from constants import (
+from .constants import (
     CellState,
     EMPTY,
     FIRE,
@@ -44,8 +44,10 @@ class Forest:
     Fields:
         - width: The width of the forest.
           :type width: int
+
         - height: The height of the forest.
           :type height: int
+
         - cells: A dictionary of cell positions and their states.
           :type cells: dict[tuple[int, int], CellState]
     """
