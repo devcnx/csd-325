@@ -10,12 +10,8 @@ Trees grow randomly and can be struck by lightning, which causes fires to spread
 import random
 import sys
 import time
-import os
 
-# Add the parent directory to the Python path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from .constants import (
+from constants import (
     CellState,
     EMPTY,
     FIRE,
@@ -43,17 +39,15 @@ except ImportError:
 @dataclass
 class Forest:
     """
-    A forest simulation grid.
+    A forest grid for the simulation.
 
     Fields:
         - width: The width of the forest.
-        :type width: int
-
+          :type width: int
         - height: The height of the forest.
-        :type height: int
-
+          :type height: int
         - cells: A dictionary of cell positions and their states.
-        :type cells: dict[tuple[int, int], CellState]
+          :type cells: dict[tuple[int, int], CellState]
     """
 
     width: int
