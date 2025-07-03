@@ -67,3 +67,6 @@ ignore_draft_pr: true
       - Ensure that all plots generated with Matplotlib have a title, an x-axis label, and a y-axis label for clarity.
       - Verify that different data series (e.g., highs vs. lows) are plotted in different colors to be easily distinguishable.
     
+# You can disable this status message by setting the reviews.review_status to false in the CodeRabbit configuration file.
+reviews:
+  review_status: false
