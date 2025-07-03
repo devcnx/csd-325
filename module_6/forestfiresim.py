@@ -40,6 +40,12 @@ except ImportError:
 class Forest:
     """
     A forest grid for the simulation.
+    
+    This class represents a grid of cells, each of which can be in one of three states:
+    
+    - TREE: A tree cell.
+    - FIRE: A fire cell.
+    - EMPTY: An empty cell.
 
     Fields:
         - width: The width of the forest.
@@ -63,6 +69,13 @@ class Forest:
 
         A new Forest instance is returned with each cell set to TREE or EMPTY based on
         the initial tree density probability.
+        
+        Parameters:
+            - width: Width of the forest grid.
+            :type width: int
+            
+            - height: Height of the forest grid.
+            :type height: int
 
         Returns:
             - A new Forest object with randomly initialized cell states.
