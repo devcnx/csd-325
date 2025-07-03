@@ -3,28 +3,25 @@
 # Set the language for all reviews.
 system_language: "en-US"
 
-# A little fun is good, but let's keep the PR comments focused on the review.
+# Keep PR comments focused on the code review.
 disable_poem: true
 
-# It's good practice to ignore draft PRs until they are ready for review.
+# Ignore draft PRs until ready for review.
 ignore_draft_pr: true
 
-# Ignore PRs with "WIP" (Work In Progress) in the title.
+# Ignore PRs with "WIP" in the title.
 ignored_titles: "WIP"
 
 # --------------------------------------------------------------------------
 # --- Path Filtering: Focus the review on what matters most in this course ---
 # --------------------------------------------------------------------------
 path_filters:
-  # Explicitly include all Python files for review.
-  - "**/*.py"
-  # Exclude common files and folders that don't need a code review.
+  - "**/*.py"            # Include all Python files.
   - "!**/__pycache__/**" # Ignore Python's cache directories.
   - "!**/venv/**"        # Ignore virtual environment folders.
   - "!**/.venv/**"
-  - "!**/*.pyc"         # Ignore compiled Python files.
-  - "!**/*.sqlite3"     # Ignore the Django database file.
-  # Exclude assignment documents and assets.
+  - "!**/*.pyc"          # Ignore compiled Python files.
+  - "!**/*.sqlite3"      # Ignore the Django database file.
   - "!**/*.pdf"
   - "!**/*.docx"
   - "!**/*.md"
@@ -36,7 +33,7 @@ path_filters:
 # --------------------------------------------------------------------------
 # --- Custom Instructions: Your AI Mentor's Cheat Sheet 🐍 ---
 # --------------------------------------------------------------------------
-[cite_start]file_path_instructions: # [cite: 1]
+file_path_instructions:
   - path: "**/*.py"
     instructions: |
       Please act as a Python programming mentor for the CSD325 course.
@@ -66,7 +63,6 @@ path_filters:
       - Check that any opened CSV files are properly closed, preferably using a `with` statement.
       - Ensure that all plots generated with Matplotlib have a title, an x-axis label, and a y-axis label for clarity.
       - Verify that different data series (e.g., highs vs. lows) are plotted in different colors to be easily distinguishable.
-    
-# You can disable this status message by setting the reviews.review_status to false in the CodeRabbit configuration file.
+
 reviews:
   review_status: false
