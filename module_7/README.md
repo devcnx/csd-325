@@ -1,9 +1,9 @@
-_**Institution**: Bellevue University_  
-_**Program**: BS in Software Development_  
-_**Term**: Spring 2025_  
-_**Course**: CSD325 Advanced Python_  
-_**Assignment**: Module 7.2 Test Cases_  
-_**Author**: Brittaney Perry-Morgan_  
+_**Institution**: Bellevue University_
+_**Program**: BS in Software Development_
+_**Term**: Spring 2025_
+_**Course**: CSD325 Advanced Python_
+_**Assignment**: Module 7.2 Test Cases_
+_**Author**: Brittaney Perry-Morgan_
 _**Date**: Sunday, June 29th, 2025_
 
 # Module 7.2 Test Cases
