@@ -11,7 +11,7 @@ import random
 import sys
 import time
 
-from .constants import (
+from module_6.constants import (
     CellState,
     EMPTY,
     FIRE,
