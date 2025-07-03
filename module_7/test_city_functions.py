@@ -6,6 +6,13 @@ from module_7.constants import CITY_COUNTRIES
 
 
 class TestCityCountry(unittest.TestCase):
+    """
+    Test class for city_country_str function.
+
+    Fields:
+        - None
+    """
+
     def test_city_country(self) -> None:
         """Test that city_country_str returns the correct string, including formatting."""
         result = city_country_str(
