@@ -9,9 +9,6 @@ import random
 from module_7.constants import CITY_COUNTRIES
 
 
-# Phase 1: Create a function that returns a city and a country.
-
-
 def city_country_str(city: str, country: str) -> str:
     """
     Displays a string in the format City, Country.
