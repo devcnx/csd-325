@@ -6,7 +6,7 @@ system_language: "en-US"
 # Keep PR comments focused on the code review.
 reviews:
   # Ignore draft PRs until ready for review.
-  auto_review_drafts: false
+  # auto_review_drafts: (removed, unsupported property) false
 
   # Ignore PRs with "WIP" in the title.
   auto_review:
