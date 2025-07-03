@@ -1,9 +1,6 @@
-Name: Brittaney Perry-Morgan
-Date: Sunday, June 29th, 2025
-Assignment: Module 6.2 Forest Fire Simulation: Program and Revised Flowchart
-Purpose: To demonstrate proficiency in advanced Python programming.
-
 # Module 6.2 Forest Fire Simulation: Program and Revised Flowchart
+
+## Assignment Details
 
 _**Institution**: Bellevue University_  
 _**Program**: BS in Software Development_  
