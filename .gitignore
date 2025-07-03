@@ -211,9 +211,6 @@ cython_debug/
 #macOS
 .DS_Store
 
-# DeepSource
-.deepsource.toml
-
 # Bext
 typings/
 .bextcode
