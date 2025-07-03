@@ -19,19 +19,19 @@ import random
 import sys
 import time
 from dataclasses import dataclass, field
-from .constants import (
-        CellState,
-        EMPTY,
-        FIRE,
-        FIRE_CHANCE,
-        GROW_CHANCE,
-        HEIGHT,
-        INITIAL_TREE_DENSITY,
-        LAKE,
-        PAUSE_LENGTH,
-        TREE,
-        WIDTH,
-    )
+from module_6.constants import (
+            CellState,
+            EMPTY,
+            FIRE,
+            FIRE_CHANCE,
+            GROW_CHANCE,
+            HEIGHT,
+            INITIAL_TREE_DENSITY,
+            LAKE,
+            PAUSE_LENGTH,
+            TREE,
+            WIDTH,
+        )
 
 try:
     import bext
@@ -123,8 +123,6 @@ class Forest:
 
     def _has_burning_neighbor(self, x: int, y: int) -> bool:
         """
-        Returns True if at least one of the eight neighboring cells around (x, y) is on fire.
-
         Parameters:
             - x: X coordinate of the cell.
             :type x: int
@@ -144,7 +142,7 @@ class Forest:
         return False
 
     def _spread_fire_to_neighbors(self, center_x: int, center_y: int,
-                                  cells_to_update: dict[tuple[int, int], CellState]) -> None:
+                                cells_to_update: dict[tuple[int, int], CellState]) -> None:
         """
         Marks all neighboring tree cells of the specified cell to be set on fire in the next simulation step.
 
@@ -156,7 +154,7 @@ class Forest:
             :type center_y: int
 
             - cells_to_update: A dictionary of cells to update.
-            :type cells_to_update: dict[tuple[int, int], Any]
+            :type cells_to_update: dict[tuple[int, int], CellState]
         """
         for delta_x, delta_y in self._get_neighbors():
             neighbor_x, neighbor_y = center_x + delta_x, center_y + delta_y
@@ -168,7 +166,7 @@ class Forest:
         """
         Advances the forest simulation by one time step.
         """
-        new_cells: dict[tuple[int, int], Any] = {}
+        new_cells: dict[tuple[int, int], CellState] = {}
         for x in range(self.width):
             for y in range(self.height):
                 pos = (x, y)
