@@ -4,65 +4,53 @@
 system_language: "en-US"
 
 # Keep PR comments focused on the code review.
-disable_poem: true
-
-# Ignore draft PRs until ready for review.
-ignore_draft_pr: true
-
-# Ignore PRs with "WIP" in the title.
-ignored_titles: "WIP"
-
-# --------------------------------------------------------------------------
-# --- Path Filtering: Focus the review on what matters most in this course ---
-# --------------------------------------------------------------------------
-path_filters:
-  - "**/*.py"            # Include all Python files.
-  - "!**/__pycache__/**" # Ignore Python's cache directories.
-  - "!**/venv/**"        # Ignore virtual environment folders.
-  - "!**/.venv/**"
-  - "!**/*.pyc"          # Ignore compiled Python files.
-  - "!**/*.sqlite3"      # Ignore the Django database file.
-  - "!**/*.pdf"
-  - "!**/*.docx"
-  - "!**/*.md"
-  - "!**/*.zip"
-  - "!**/*.png"
-  - "!**/*.jpg"
-  - "!**/*.mp4"
-
-# --------------------------------------------------------------------------
-# --- Custom Instructions: Your AI Mentor's Cheat Sheet 🐍 ---
-# --------------------------------------------------------------------------
-file_path_instructions:
-  - path: "**/*.py"
-    instructions: |
-      Please act as a Python programming mentor for the CSD325 course.
-      - Ensure the code adheres to PEP 8 standards for style and readability.
-      - Check for clear and concise docstrings for all modules, classes, and functions, explaining their purpose, arguments, and what they return.
-      - Point out any unhandled exceptions or potential runtime errors.
-      - Suggest more "Pythonic" ways to write code where applicable (e.g., using comprehensions, context managers).
-
-  - path: "**/test_*.py"
-    instructions: |
-      This is a `pytest` test file. Please review it carefully.
-      - Ensure that test function names are descriptive (e.g., `test_city_country_population`).
-      - Confirm that appropriate pytest assertions are used (e.g., `assert x == y`, `assert value is True`).
-      - Check that the tests cover both expected outcomes and edge cases.
-      - Ensure the file correctly imports the functions/classes being tested.
-
-  - path: "**/views.py"
-    instructions: |
-      This is a Django views file.
-      - Ensure it imports `HttpResponse` from `django.http`.
-      - Check that each view function accepts a `request` object as its first parameter.
-      - Verify that each view returns an `HttpResponse` object.
-
-  - path: "**/*high_low*.py"
-    instructions: |
-      This is a data visualization script using Matplotlib and the CSV module.
-      - Check that any opened CSV files are properly closed, preferably using a `with` statement.
-      - Ensure that all plots generated with Matplotlib have a title, an x-axis label, and a y-axis label for clarity.
-      - Verify that different data series (e.g., highs vs. lows) are plotted in different colors to be easily distinguishable.
-
 reviews:
+  # Ignore draft PRs until ready for review.
+  auto_review_drafts: false
+
+  # Ignore PRs with "WIP" in the title.
+  auto_review:
+    ignore_title_keywords:
+      - "WIP"
+
+  # --------------------------------------------------------------------------
+  # --- Path Filtering: Focus the review on what matters most in this course ---
+  # --------------------------------------------------------------------------
+  path_filters:
+    - "**/*.py"            # Include all Python files.
+    - "!**/__pycache__/**" # Ignore Python's cache directories.
+    - "!**/venv/**"        # Ignore virtual environment folders.
+    - "!**/.venv/**"
+    - "!**/*.pyc"          # Ignore compiled Python files.
+    - "!**/*.sqlite3"      # Ignore the Django database file.
+    - "!**/*.pdf"
+    - "!**/*.docx"
+    - "!**/*.md"
+    - "!**/*.zip"
+    - "!**/*.png"
+    - "!**/*.jpg"
+    - "!**/*.mp4"
+
+  # --------------------------------------------------------------------------
+  # --- Custom Instructions: Your AI Mentor's Cheat Sheet 🐍 ---
+  # --------------------------------------------------------------------------
   review_status: false
+
+  path_instructions:
+    - path: "**/*.py"
+      instructions: |
+        Please act as a Python programming mentor for the CSD325 course.
+        - Ensure the code adheres to PEP 8 standards for style and readability.
+        - Check for clear and concise docstrings for all modules, classes, and functions, explaining their purpose, arguments, and what they return.
+        - Point out any unhandled exceptions or potential runtime errors.
+        - Suggest more "Pythonic" ways to write code where applicable (e.g., using comprehensions, context managers).
+
+    - path: "**/test_*.py"
+      instructions: |
+        This is a `pytest` test file. Please review it carefully.
+        - Ensure that test function names are descriptive (e.g., `test_city_country_population`).
+        - Confirm that appropriate pytest assertions are used (e.g., `assert x == y`, `assert value is True`).
+        - Check that the tests cover both expected outcomes and edge cases.
+        - Ensure the file correctly imports the functions/classes being tested.
+
+
