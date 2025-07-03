@@ -22,8 +22,3 @@ test_patterns = [
 [[analyzers]]
 name = "python"
 enabled = true
-
-
-[[analyzers]]
-name = "javascript"
-enabled = true
