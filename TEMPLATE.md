@@ -1,16 +1,11 @@
-Name: Brittaney Perry-Morgan
-Date: Sunday, June 1st, 2025
-Assignment: Module 1.3 On the Wall + Flowchart
-Purpose:
-
-# Module
-
 _**Institution**: Bellevue University_  
 _**Program**: BS in Software Development_  
 _**Term**: Spring 2025_  
 _**Course**: CSD325 Advanced Python_  
 _**Author**: Brittaney Perry-Morgan_  
 _**Date**: Sunday, June 1st, 2025_
+
+# Module
 
 This repository contains the source code for an assignment in the CSD325 course. The assignment is designed to demonstrate proficiency in advanced Python programming.
 
