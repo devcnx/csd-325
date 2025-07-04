@@ -9,9 +9,12 @@ import random
 from module_7.constants import CITY_COUNTRIES
 
 
-def city_country_str(city: str, country: str, population: int = 0) -> str:
+def city_country_str(
+    language: str, city: str, country: str, population: int = 0
+) -> str:
     """
-    Displays a string in the format City, Country - Population #.
+    Displays a string in the format City, Country - Population # (if provided),
+    Language.
 
     This function takes a city, a country, and a population as input and returns a
     string in the format City, Country - Population #. The population is optional and
@@ -21,6 +24,10 @@ def city_country_str(city: str, country: str, population: int = 0) -> str:
     the city and country names.
 
     Parameters:
+
+        - language: The language of the city.
+        :type language: str
+
         - city: The name of the city.
         :type city: str
 
@@ -34,20 +41,22 @@ def city_country_str(city: str, country: str, population: int = 0) -> str:
         - A string in the format City, Country - Population #.
         :rtype: str
     """
-    return (
-        f"{city.title()}, {country.title()} - Population {population:,.0f}"
-        if population > 0
-        else f"{city.title()}, {country.title()}"
-    )
+    if population > 0 and language:
+        return f"{city.title()}, {country.title()} - Population {population:,}, {language.title()}"
+    if language:
+        return f"{city.title()}, {country.title()}, {language.title()}"
+    if population > 0:
+        return f"{city.title()}, {country.title()} - Population {population:,}"
+    return f"{city.title()}, {country.title()}"
 
 
 if __name__ == "__main__":
-    num_samples = 1
-    city_and_country = random.choices(CITY_COUNTRIES, weights=None, k=num_samples)
+    city_and_country = random.choices(CITY_COUNTRIES, weights=None, k=1)
+    is_language = random.choice([True, False])
     print(
         city_country_str(
-            city_and_country[0]["city"],
-            city_and_country[0]["country"],
+            city=city_and_country[0]["city"],
+            country=city_and_country[0]["country"],
             population=random.randint(0, 5),
         )
     )
