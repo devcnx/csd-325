@@ -7,6 +7,8 @@ Purpose: Demonstrate ability to work with JavaScript Object Notation (JSON).
 The purpose of this program is to use an existing JSON file to create a list
 of students, add a new student to the list, and then write the updated list
 back to the JSON file.
+
+This module is the driver for the JSON student management system.
 """
 
 # Create a function that loops through the .json class list and prints out each value.
