@@ -9,12 +9,12 @@ import random
 from module_7.constants import CITY_COUNTRIES
 
 
-def city_country_str(city: str, country: str) -> str:
+def city_country_str(city: str, country: str, population: int) -> str:
     """
     Displays a string in the format City, Country.
 
-    This function takes a city and a country as input and returns a string in the format
-    City, Country.
+    This function takes a city, a country, and a population as input and returns a string
+    in the format City, Country.
 
     The function uses the title() method to capitalize the first letter of each word in
     the city and country names.
@@ -26,14 +26,23 @@ def city_country_str(city: str, country: str) -> str:
         - country: The name of the country.
         :type country: str
 
+        - population: The population of the city.
+        :type population: int
+
     Returns:
-        - A string in the format City, Country.
+        - A string in the format City, Country - Population #.
         :rtype: str
     """
-    return f"{city.title()}, {country.title()}"
+    return f"{city.title()}, {country.title()} - Population {population:,.0f}"
 
 
 if __name__ == "__main__":
     num_samples = 1
     city_and_country = random.choices(CITY_COUNTRIES, weights=None, k=num_samples)
-    print(city_country_str(city_and_country[0]["city"], city_and_country[0]["country"]))
+    print(
+        city_country_str(
+            city_and_country[0]["city"],
+            city_and_country[0]["country"],
+            population=random.randint(50000, 100000000),
+        )
+    )
