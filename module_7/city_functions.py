@@ -48,6 +48,6 @@ if __name__ == "__main__":
         city_country_str(
             city_and_country[0]["city"],
             city_and_country[0]["country"],
-            population=random.randint(50000, 100000000),
+            population=random.randint(0, 5),
         )
     )
