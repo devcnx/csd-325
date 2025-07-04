@@ -6,11 +6,11 @@ Purpose: Provides the city_country function that will be used in the test cases.
 """
 
 import random
-from module_7.constants import CITY_COUNTRIES
+from module_7.constants import CITY_COUNTRIES, LANGUAGES, DEFAULT_LANGUAGE
 
 
 def city_country_str(
-    language: str, city: str, country: str, population: int = 0
+    city: str, country: str, population: int = 0, language: str = ""
 ) -> str:
     """
     Displays a string in the format City, Country - Population # (if provided),
@@ -25,9 +25,6 @@ def city_country_str(
 
     Parameters:
 
-        - language: The language of the city.
-        :type language: str
-
         - city: The name of the city.
         :type city: str
 
@@ -37,14 +34,17 @@ def city_country_str(
         - population: The population of the city.
         :type population: int
 
+        - language: The language of the city.
+        :type language: str
+
     Returns:
-        - A string in the format City, Country - Population #.
+        - A string in the format City, Country - Population #, Language.
         :rtype: str
     """
     if population > 0 and language:
         return f"{city.title()}, {country.title()} - Population {population:,}, {language.title()}"
     if language:
-        return f"{city.title()}, {country.title()}, {language.title()}"
+        return f"{city.title()}, {country.title()} - {language.title()}"
     if population > 0:
         return f"{city.title()}, {country.title()} - Population {population:,}"
     return f"{city.title()}, {country.title()}"
@@ -58,5 +58,12 @@ if __name__ == "__main__":
             city=city_and_country[0]["city"],
             country=city_and_country[0]["country"],
             population=random.randint(0, 5),
+        )
+        if is_language
+        else city_country_str(
+            city=city_and_country[0]["city"],
+            country=city_and_country[0]["country"],
+            population=random.randint(0, 5),
+            language=random.choice(LANGUAGES),
         )
     )
