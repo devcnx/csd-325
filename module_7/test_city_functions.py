@@ -16,7 +16,6 @@ class TestCityCountry(unittest.TestCase):
     def test_city_country(self) -> None:
         """Test that city_country_str returns the correct string, including formatting."""
         result = city_country_str(
-            language="",
             city=CITY_COUNTRIES[0]["city"],
             country=CITY_COUNTRIES[0]["country"],
             population=0,
