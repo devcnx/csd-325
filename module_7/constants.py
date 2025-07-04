@@ -17,3 +17,16 @@ CITY_COUNTRIES = [
     {"city": "Moscow", "country": "Russia"},
     {"city": "Beijing", "country": "China"},
 ]
+
+LANGUAGES = [
+    "English",
+    "Spanish",
+    "Japanese",
+    "French",
+    "German",
+    "Italian",
+    "Russian",
+    "Chinese",
+]
+
+DEFAULT_LANGUAGE = "English"
