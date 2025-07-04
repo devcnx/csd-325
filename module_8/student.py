@@ -14,12 +14,12 @@ class Student:
     """
     Representation of a Student.
 
-    This dataclass is used to model a student. The fields are the student's ID, first
-    name, last name, and their email.
+    The Student class represents a student with a student ID, first name,
+    last name, and their email.
 
     Fields:
-        - student_id_number: The student's ID.
-        :type student_id_number: int
+        - _student_id_number: The student's ID.
+        :type _student_id_number: int
 
         - first_name: The student's first name.
         :type first_name: str
@@ -27,11 +27,11 @@ class Student:
         - last_name: The student's last name.
         :type last_name: str
 
-        - email: The student's email address.
-        :type email: str
+        - email_address: The student's email address.
+        :type email_address: str
     """
 
-    student_id_number: int
+    _student_id_number: int
     first_name: str
     last_name: str
     email_address: str
@@ -56,11 +56,11 @@ class Student:
             - last_name: The student's last name.
             :type last_name: str
 
-            - student_id: The student ID.
-            :type student_id: int
+            - student_id_number: The student ID.
+            :type student_id_number: int
 
-            - email: The student's email address.
-            :type email: str
+            - email_address: The student's email address.
+            :type email_address: str
         """
         self.student_id_number = student_id or 0
         self.first_name = first_name
@@ -78,7 +78,7 @@ class Student:
             - The student ID.
             :rtype: int
         """
-        return self.student_id_number
+        return self._student_id_number
 
     @student_id_number.setter
     def student_id_number(self, student_id: int) -> None:
@@ -88,8 +88,8 @@ class Student:
         This property is used to set the student ID.
 
         Parameters:
-            - student_id: The student ID.
-            :type student_id: int
+            - student_id_number: The student ID.
+            :type student_id_number: int
         """
         self.student_id_number = student_id or 0
 
@@ -110,5 +110,6 @@ class Student:
         """
         return (
             f"{self.last_name}, {self.first_name} : "
-            f"ID = {self.student_id_number}, Email = {self.email_address}"
+            f"ID = {self.student_id_number}, "
+            f"Email = {self.email_address}"
         )

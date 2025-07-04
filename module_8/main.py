@@ -11,7 +11,8 @@ back to the JSON file.
 This module is the driver for the JSON student management system.
 """
 
-# Create a function that loops through the .json class list and prints out each value.
+# Create a function that loops through the .json class list and
+# prints out each value.
 # The format should be Last Name, First Name : ID = #, Email = email
 
 
@@ -40,12 +41,13 @@ This module is the driver for the JSON student management system.
 # Run the program and take a screenshot of the results.
 
 
-# Once the program runs, you should also see a notification that the student.json
-# file has changed, with a choice to save or not.
+# Once the program runs, you should also see a notification
+# that the student.json file has changed, with a choice to save or not.
 # This should be a pop-up dialog box that appears after the program runs.
 # It should have the path to the json file, and a message to the user asking if
 # they want to save the changes.
-# If they decide not to save, the file should revert back to its original state.
+# If they decide not to save, the file should revert back to its
+# original state.
 # If they decide to save, the file should be saved to the same location.
 
 
