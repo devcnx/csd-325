@@ -41,6 +41,3 @@ def load_students(json_path: str) -> list[Student]:
     except json.JSONDecodeError as e:
         print(f"***** Invalid JSON format in {json_path}: {e}")
         sys.exit(1)
-
-
-\
