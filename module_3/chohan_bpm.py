@@ -21,30 +21,31 @@ Changes from chohan.py:
 import random
 import sys
 
-JAPANESE_NUMBERS = {1: 'ICHI', 2: 'NI', 3: 'SAN',
-                    4: 'SHI', 5: 'GO', 6: 'ROKU'}
+JAPANESE_NUMBERS = {1: "ICHI", 2: "NI", 3: "SAN", 4: "SHI", 5: "GO", 6: "ROKU"}
 
-print('''Cho-Han, adapted by BrP (brittaneyperry-morgan)
+print(
+    """Cho-Han, adapted by BrP (brittaneyperry-morgan)
 
 In this traditional Japanese dice game, two dice are rolled in a bamboo
 cup by the dealer sitting on the floor. The player must guess if the
 dice total to an even (cho) or odd (han) number.
 
 NOTICE: If you roll a total of 2 or 7, you get a 10 mon bonus!
-''')
+"""
+)
 
 purse = 5000
 while True:
-    print('You have', purse, 'mon. How much do you bet? (or QUIT)')
+    print("You have", purse, "mon. How much do you bet? (or QUIT)")
     while True:
-        pot = input('bpm: ')
-        if pot.upper() == 'QUIT':
-            print('Thanks for playing!')
+        pot = input("bpm: ")
+        if pot.upper() == "QUIT":
+            print("Thanks for playing!")
             sys.exit()
         elif not pot.isdecimal():
-            print('Please enter a number.')
+            print("Please enter a number.")
         elif int(pot) > purse:
-            print('You do not have enough to make that bet.')
+            print("You do not have enough to make that bet.")
         else:
             pot = int(pot)
             break
@@ -53,42 +54,42 @@ while True:
     dice2 = random.randint(1, 6)
     dice_total = dice1 + dice2
 
-    print('The dealer swirls the cup and you hear the rattle of dice.')
-    print('The dealer slams the cup on the floor, still covering the')
-    print('dice and asks for your bet.')
+    print("The dealer swirls the cup and you hear the rattle of dice.")
+    print("The dealer slams the cup on the floor, still covering the")
+    print("dice and asks for your bet.")
     print()
-    print('    CHO (even) or HAN (odd)?')
+    print("    CHO (even) or HAN (odd)?")
 
     while True:
-        bet = input('bpm: ').upper()
-        if bet in ['CHO', 'HAN']:
+        bet = input("bpm: ").upper()
+        if bet in ["CHO", "HAN"]:
             break
 
         else:
             print('Please enter either "CHO" or "HAN".')
-    print('The dealer lifts the cup to reveal:')
-    print('  ', JAPANESE_NUMBERS[dice1], '-', JAPANESE_NUMBERS[dice2])
-    print('    ', dice1, '-', dice2)
+    print("The dealer lifts the cup to reveal:")
+    print("  ", JAPANESE_NUMBERS[dice1], "-", JAPANESE_NUMBERS[dice2])
+    print("    ", dice1, "-", dice2)
 
     if dice_total in [2, 7]:
-        print(f'BONUS! The total of the roll was {dice_total}. You get a 10 mon bonus!')
+        print(f"BONUS! The total of the roll was {dice_total}. You get a 10 mon bonus!")
         purse += 10
 
     rollIsEven = (dice_total) % 2 == 0
-    correctBet = 'CHO' if rollIsEven else 'HAN'
+    correctBet = "CHO" if rollIsEven else "HAN"
     playerWon = bet == correctBet
 
     if playerWon:
-        print('You won! You take', pot, 'mon.')
+        print("You won! You take", pot, "mon.")
         purse = purse + pot
         house_fee = int(round(pot * 0.12))
-        print('The house collects a', house_fee, 'mon fee.')
+        print("The house collects a", house_fee, "mon fee.")
         purse = purse - house_fee
     else:
         purse = purse - pot
-        print('You lost!')
+        print("You lost!")
 
     if purse == 0:
-        print('You have run out of money!')
-        print('Thanks for playing!')
+        print("You have run out of money!")
+        print("Thanks for playing!")
         sys.exit()

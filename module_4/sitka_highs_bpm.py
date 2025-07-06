@@ -17,6 +17,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import sys
 
+
 def get_weather_data(filename):
     """Reads weather data from a CSV file and returns dates, highs, and lows."""
     with open(filename) as f:
@@ -37,6 +38,7 @@ def get_weather_data(filename):
                 lows.append(low)
     return dates, highs, lows
 
+
 def plot_temperatures(dates, temperatures, color, title):
     """Plots the given temperatures."""
     fig, ax = plt.subplots()
@@ -49,6 +51,7 @@ def plot_temperatures(dates, temperatures, color, title):
     plt.tick_params(axis="both", which="major", labelsize=16)
     plt.show()
 
+
 def print_instructions():
     print("\nWelcome to the Sitka Weather 2018 Temperature Viewer!")
     print("You can view daily high or low temperatures as a graph.")
@@ -57,6 +60,7 @@ def print_instructions():
     print("  2 - View Low Temperatures (blue graph)")
     print("  3 - Exit the program")
     print("Select the desired option by entering its number and pressing Enter.\n")
+
 
 def main():
     filename = "sitka_weather_2018_simple.csv"
@@ -81,6 +85,7 @@ def main():
             sys.exit()
         else:
             print("Invalid choice. Please try again.")
+
 
 if __name__ == "__main__":
     main()
