@@ -15,30 +15,31 @@ Modifications include:
     - The water feature cannot be modified once it is in place.
         - It acts as a firebreak that flames cannot cross.
 """
+
 import random
 import sys
 import time
 from dataclasses import dataclass, field
 from module_6.constants import (
-            CellState,
-            EMPTY,
-            FIRE,
-            FIRE_CHANCE,
-            GROW_CHANCE,
-            HEIGHT,
-            INITIAL_TREE_DENSITY,
-            LAKE,
-            PAUSE_LENGTH,
-            TREE,
-            WIDTH,
-        )
+    CellState,
+    EMPTY,
+    FIRE,
+    FIRE_CHANCE,
+    GROW_CHANCE,
+    HEIGHT,
+    INITIAL_TREE_DENSITY,
+    LAKE,
+    PAUSE_LENGTH,
+    TREE,
+    WIDTH,
+)
 
 try:
     import bext
 except ImportError:
-    print('This program requires the bext module, which you')
-    print('can install by following the instructions at')
-    print('https://pypi.org/project/Bext/')
+    print("This program requires the bext module, which you")
+    print("can install by following the instructions at")
+    print("https://pypi.org/project/Bext/")
     sys.exit(1)
 
 
@@ -63,7 +64,7 @@ class Forest:
     cells: dict[tuple[int, int], CellState] = field(default_factory=dict)
 
     @classmethod
-    def create_new(cls, width: int, height: int) -> 'Forest':
+    def create_new(cls, width: int, height: int) -> "Forest":
         """
         Create and initialize a new forest grid with random tree placement.
 
@@ -106,20 +107,22 @@ class Forest:
             for x in range(self.width):
                 cell = self.cells.get((x, y), EMPTY)
                 if cell == TREE:
-                    line_parts.append('\x1b[32m' + TREE + '\x1b[0m')  # Green
+                    line_parts.append("\x1b[32m" + TREE + "\x1b[0m")  # Green
                 elif cell == FIRE:
-                    line_parts.append('\x1b[31m' + FIRE + '\x1b[0m')   # Red
+                    line_parts.append("\x1b[31m" + FIRE + "\x1b[0m")  # Red
                 elif cell == LAKE:
                     # Display the lake as blue '~'
-                    line_parts.append('\x1b[34m~\x1b[0m')  # Blue water
+                    line_parts.append("\x1b[34m~\x1b[0m")  # Blue water
                 else:
-                    line_parts.append('\x1b[0m' + EMPTY)
-            output.append(''.join(line_parts))
-        status_line = (f'Grow chance: {GROW_CHANCE * 100:.0f}%  '
-                       f'Lightning chance: {FIRE_CHANCE * 100:.0f}%  '
-                       'Press Ctrl-C to quit.')
+                    line_parts.append("\x1b[0m" + EMPTY)
+            output.append("".join(line_parts))
+        status_line = (
+            f"Grow chance: {GROW_CHANCE * 100:.0f}%  "
+            f"Lightning chance: {FIRE_CHANCE * 100:.0f}%  "
+            "Press Ctrl-C to quit."
+        )
         output.append(status_line)
-        print('\n'.join(output), end='\r')
+        print("\n".join(output), end="\r")
 
     def _has_burning_neighbor(self, x: int, y: int) -> bool:
         """
@@ -136,13 +139,20 @@ class Forest:
         """
         for dx, dy in self._get_neighbors():
             nx, ny = x + dx, y + dy
-            if (0 <= nx < self.width and 0 <= ny < self.height
-                    and self.cells.get((nx, ny), EMPTY) == FIRE):
+            if (
+                0 <= nx < self.width
+                and 0 <= ny < self.height
+                and self.cells.get((nx, ny), EMPTY) == FIRE
+            ):
                 return True
         return False
 
-    def _spread_fire_to_neighbors(self, center_x: int, center_y: int,
-                                cells_to_update: dict[tuple[int, int], CellState]) -> None:
+    def _spread_fire_to_neighbors(
+        self,
+        center_x: int,
+        center_y: int,
+        cells_to_update: dict[tuple[int, int], CellState],
+    ) -> None:
         """
         Marks all neighboring tree cells of the specified cell to be set on fire in the next simulation step.
 
@@ -158,8 +168,11 @@ class Forest:
         """
         for delta_x, delta_y in self._get_neighbors():
             neighbor_x, neighbor_y = center_x + delta_x, center_y + delta_y
-            if (0 <= neighbor_x < self.width and 0 <= neighbor_y < self.height and
-                    self.cells.get((neighbor_x, neighbor_y), EMPTY) == TREE):
+            if (
+                0 <= neighbor_x < self.width
+                and 0 <= neighbor_y < self.height
+                and self.cells.get((neighbor_x, neighbor_y), EMPTY) == TREE
+            ):
                 cells_to_update[(neighbor_x, neighbor_y)] = FIRE
 
     def step(self) -> None:
@@ -200,11 +213,7 @@ class Forest:
         """
         Returns relative coordinate offsets for all 8 neighboring cells in a 2D grid.
         """
-        return [
-            (-1, -1), (-1, 0), (-1, 1),
-            (0, -1),           (0, 1),
-            (1, -1),  (1, 0),  (1, 1)
-        ]
+        return [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
 
 
 def main() -> None:
@@ -224,14 +233,14 @@ def main() -> None:
             forest.step()
             time.sleep(PAUSE_LENGTH)
     except KeyboardInterrupt:
-        print('\nForest Fire Simulation, by Al Sweigart')  # noqa: SC100
-        print('Modified by Sue Sampson')
-        print('Refactored by Brittaney Perry-Morgan')
+        print("\nForest Fire Simulation, by Al Sweigart")  # noqa: SC100
+        print("Modified by Sue Sampson")
+        print("Refactored by Brittaney Perry-Morgan")
         sys.exit()  # When Ctrl-C is pressed, end the program.
 
 
 # If this program was run (instead of imported), run the game:
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
