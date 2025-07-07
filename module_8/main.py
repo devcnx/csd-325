@@ -47,6 +47,7 @@ def display_students(students: list[dict[str, str | int]]) -> None:
 def add_student(
     students: list[dict[str, str | int]], new_student: dict[str, str | int]
 ) -> list[dict[str, str | int]]:
+
     students.append(new_student)
     return students
 
