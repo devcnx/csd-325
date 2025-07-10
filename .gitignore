@@ -214,3 +214,7 @@ cython_debug/
 # Bext
 typings/
 .bextcode
+
+# Python Mustache
+python.mustache
+.mustache
