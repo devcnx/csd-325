@@ -6,8 +6,9 @@
     "exclude": [
         "**/node_modules",
         "**/__pycache__",
-        "/venv",
-        "/.vscode",
+        ".venv",
+        ".vscode",
+        ".github",
     ],
     "ignore": [
         "/.git",

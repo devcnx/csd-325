@@ -4,18 +4,21 @@ Date: Sunday, June 15th, 2025
 Assignment: Module 3.2 Brownfield + Flowchart
 Purpose: Modify the original `sitka_highs.py` module as defined below:
     - Open the program with instructions on how to use the menu: Highs, Lows, or Exit.
-    - When the program starts, allow the user to select whether they want to see the high
-    temperatures or the low temperatures, or to exit.
-    - When the user selects `lows`, they should see a graph, in blue, that reflects the lows for those dates.
+    - When the program starts, allow the user to select whether they want to see
+    the high temperatures or the low temperatures, or to exit.
+    - When the user selects `lows`, they should see a graph, in blue, that reflects
+    the lows for those dates.
     - Allow the program to loop until the user selects exit.
     - When the user exits, provide an exit message.
-    - Use what elements you can from previous programs, perhaps including sys to help the exit process.
+    - Use what elements you can from previous programs, perhaps including
+    sys to help the exit process.
 """
 
 import csv
-from datetime import datetime
-import matplotlib.pyplot as plt
 import sys
+from datetime import datetime
+
+import matplotlib.pyplot as plt
 
 
 def get_weather_data(filename):
