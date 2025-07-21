@@ -14,7 +14,9 @@ Imports:
 import json
 import os
 import sys
+import tkinter as tk
 from pathlib import Path
+from tkinter import messagebox
 
 # Add project root to the Python path to
 project_root = Path(__file__).resolve().parents[1]
@@ -125,11 +127,31 @@ def get_relative_path(path: Path) -> str:
         return str(path)
 
 
+def show_save_dialog(file_path: Path) -> bool:
+    """
+    Shows a dialog asking the user if they want to save the changes.
+
+    Parameters:
+        - file_path: The path to the file being modified.
+        :type file_path: Path
+
+    Returns:
+        - True if the user clicks 'Yes', False otherwise.
+        :rtype: bool
+    """
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+
+    relative_path = get_relative_path(file_path)
+    message = f"This file has been modified outside. Do you want to reload it?\n\n{relative_path}"
+    return messagebox.askyesno("File Modified", message)
+
+
 if __name__ == "__main__":
     JSON_FILE_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     student_list = load_students(JSON_FILE_PATH)
-    print(student_notification(f"{'=' * 50}\nOriginal Student List:\n"))
+    print(student_notification(f"\n{'=' * 50}\nOriginal Student List:\n{'=' * 50}\n"))
     student_list.print_students()
     print("\n")
 
@@ -143,36 +165,30 @@ if __name__ == "__main__":
     if student_list.contains_student(new_student):
         print(
             student_notification(
-                f"{'=' * 50}\nDUPLICATE STUDENT DETECTED.\n Not adding to the list.\n{'=' * 50}"
+                f"\n***** DUPLICATE STUDENT DETECTED: ({new_student}) will not be added.*****\n\n"
             )
         )
     else:
         student_list.add_student(new_student)
-
-    print(
-        student_notification(
-            f"{'=' * 0}\n{'=' * 50}\nUpdated Student List (in memory):\n{'=' * 50}"
+        print(
+            student_notification(
+                f"\n***** STUDENT ADDED: ({new_student}) has been added.*****\n\n"
+            )
         )
-    )
+        if show_save_dialog(JSON_FILE_PATH):
+            save_students(JSON_FILE_PATH, student_list)
+            print(student_notification("Changes saved."))
+        else:
+            print(student_notification("Changes not saved."))
+
+    print(student_notification(f"\n{'=' * 50}\nUpdated Student List:\n{'=' * 50}\n"))
     student_list.print_students()
     print("\n")
-
-    print(
-        student_notification(
-            f"{'=' * 50}\nSaving the updated student list to JSON file\n{'=' * 50}"
-        )
-    )
-    save_students(JSON_FILE_PATH, student_list)
-    print(
-        student_notification(
-            f"----- JSON file updated: {get_relative_path(JSON_FILE_PATH)}"
-        )
-    )
 
     student_list = load_students(JSON_FILE_PATH)
     print(
         student_notification(
-            f"{'=' * 50}\n{'=' * 50}\nUpdated Student List from JSON:\n{'=' * 50}"
+            f"\n{'=' * 50}\nUpdated Student List from JSON:\n{'=' * 50}\n"
         )
     )
     student_list.print_students()
