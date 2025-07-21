@@ -7,8 +7,11 @@ Purpose: Implementation of a student management system.
 
 Imports:
     - json: Used to interact with the JSON file.
+    - os: Used to get the current working directory.
     - sys: Used to add the project root to the Python path.
     - Path: Used to work with file paths.
+    - messagebox: Used to display a message box.
+    - tkinter: Used to create a GUI.
 """
 
 import json
