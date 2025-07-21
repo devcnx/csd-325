@@ -22,6 +22,8 @@ from tkinter import messagebox
 project_root = Path(__file__).resolve().parents[1]
 sys.path.append(str(project_root))
 
+# flake8: noqa: E402
+
 from module_8.student import (  # pylint: disable=wrong-import-position
     Student,
     StudentList,
@@ -49,7 +51,8 @@ def load_students(file_path: Path) -> StudentList:
                 students_data = json.load(file)
             except json.JSONDecodeError:
                 print(
-                    f"Warning: JSON file at {file_path} is empty or malformed. Starting with an empty list."
+                    f"Warning: JSON file at {file_path} is empty or malformed. \n"
+                    f"Starting with an empty list."
                 )
                 students_data = []
     students = [
@@ -89,8 +92,12 @@ def save_students(file_path: Path, student_list: StudentList) -> None:
         }
         for s in student_list.students
     ]
-    with open(file_path, encoding="utf-8", mode="w") as file:
-        json.dump(data_to_save, file, indent=4)
+    try:
+        with open(file_path, encoding="utf-8", mode="w") as file:
+            json.dump(data_to_save, file, indent=4)
+    except (IOError, OSError) as e:
+        print(f"Error saving students to {file_path}: {e}")
+        raise
 
 
 def student_notification(user_msg: str) -> str:
