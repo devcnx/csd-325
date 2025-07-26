@@ -84,6 +84,6 @@ def format_json_response(json_obj: dict) -> str:
 
 if __name__ == "__main__":
     print(
-        f"This is an invalid endpoint\nStatus Code: {test_open_notify_astronauts_invalid()}\n"
+        f"\nThis is an invalid endpoint\nStatus Code: {test_open_notify_astronauts_invalid()}\n"
     )
     test_open_notify_astronauts()
