@@ -1,5 +1,5 @@
 """
-The data access layer of the application. 
+The data access layer of the application.
 
 This module is responsible for the communication with the JokeAPI.
 
