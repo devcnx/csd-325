@@ -41,20 +41,18 @@ class JokeApp:
         A private, reusable utility to get a validated choice from the user.
 
         Parameters:
-            - prompt: The prompt to display to the user.
-            :type prompt: str
-
-            - choices: Available choices for the user to choose from.
-            :type choices: list
-
-            - default: The default choice.
-            :type default: str | None
+            prompt: The prompt to display to the user.
+            choices: Available choices for the user to choose from.
+            default: The default choice if user enters nothing.
         """
         print(f"\n{prompt} (Choices: {', '.join(choices)})")
         while True:
             user_input = input(f"Enter Choice: (Default: {default}): ").strip().lower()
             if not user_input:
-                return default.lower() if default else ""
+                if default:
+                    return default.lower()
+                print("No default available. Please enter a choice.")
+                continue
             if user_input in [choice.lower() for choice in choices]:
                 return user_input
             print("Invalid Choice. Please Try Again.")

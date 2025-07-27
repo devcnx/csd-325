@@ -42,7 +42,6 @@ class JokeListResponse(TypedDict):
     jokes: list[JokeDict]
 
 
-@dataclass
 class JokeAPI:
     """
     The client for interacting with the JokeAPI.
@@ -58,6 +57,18 @@ class JokeAPI:
         """Initialize the client."""
         self.session = requests.Session()
         self.session.headers.update({"Accept": "application/json"})
+
+    def close(self) -> None:
+        """Close the HTTP session."""
+        self.session.close()
+
+    def __enter__(self):
+        """Context manager entry."""
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Context manager exit."""
+        self.close()
 
     def get_jokes(
         self, category: str, joke_type: str, amount: int = MAX_JOKES
