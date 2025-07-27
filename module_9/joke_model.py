@@ -21,21 +21,13 @@ class Joke:
     """
     Representation of a single joke.
 
-    Fields:
-        - category: The category of the joke.
-        :type category: str
-
-        - joke_type: The type of joke.
-        :type joke_type: str
-
-        - joke_content: The joke. Default is None.
-        :type joke_content: str
-
-        - setup: The setup of the joke. Default is None.
-        :type setup: str
-
-        - delivery: The delivery of the joke. Default is None.
-        :type delivery: str
+    Attributes:
+        category: The category of the joke
+        joke_type: The type of joke (single or twopart)
+        joke_content: The complete joke text for single-type jokes
+        setup: The setup line for two-part jokes
+        delivery: The punchline for two-part jokes
+        raw_json: The original JSON response from the API
     """
 
     category: str
@@ -58,15 +50,12 @@ class Joke:
     def print_no_formatting(self) -> None:
         """
         Print the joke in its raw, unformatted form.
-
-        Returns:
-            - None
         """
         if self.joke_type == "single":
-            print(self.joke_content)
+            print(self.joke_content or "No joke content available")
         else:
-            print(self.setup)
-            print(self.delivery)
+            print(self.setup or "No setup available")
+            print(self.delivery or "No delivery available")
 
     def print_formatted_joke(self) -> None:
         """
