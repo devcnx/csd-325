@@ -16,11 +16,7 @@ class Todo(tk.Tk):
     def __init__(self, tasks=None):
         super().__init__()
 
-        if not tasks:
-            self.tasks = []
-        else:
-            self.tasks = tasks
-
+        self.tasks = tasks if tasks else []
         self.tasks_canvas = tk.Canvas(self)
 
         self.tasks_frame = tk.Frame(self.tasks_canvas)
